@@ -1,0 +1,5 @@
+# Python 3.12. Run inside the env that also runs ComfyUI, or any venv.
+# Pinned upstream commit: a124acd4a02b3a9b72b9e7dedca5d1bfcda2a7b8
+rea-video[ocr,asr] @ git+https://github.com/JuneYaooo/rea-video.git@a124acd4a02b3a9b72b9e7dedca5d1bfcda2a7b8
+pillow>=10
+piper-tts>=1.2

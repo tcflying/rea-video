@@ -1,0 +1,24 @@
+# runtime state and generated media never go upstream
+engine/state/
+engine/logs/
+engine/temp/
+engine/input/
+engine/output/
+engine/pydeps/
+engine/rea-models/
+engine/rea-home/
+engine/voices/
+engine/backends/
+engine/spark/
+engine/torch-cu130/
+engine/__pycache__/
+__pycache__/
+*.pyc
+evidence/
+inspect/
+user/
+input/
+output/
+temp/
+REPORT.md
+1121.md
