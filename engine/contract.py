@@ -82,11 +82,13 @@ def substitute(missing, product):
                 'No packaging appears in this shot.')
     if missing & {'laces', 'strap', 'buckle', 'zipper'}:
         if product['slip_on']:
-            return ('Pinch the top edge of the opening between thumb and forefinger, stretch it gently wide '
-                    'and lower the foot in, keeping every finger outside the knit. The shoe has no laces and no strap.')
+            return ('Hold the shoe around the sole with one hand and rest the other hand on the outside of the heel, '
+                    'then tilt the shoe so the opening faces the camera; do not pull, stretch or lift the knit. '
+                    'The shoe has no laces and no strap.')
         return 'Rotate the shoe in the hand and press the upper with the thumb to show the material.'
     if missing & {'tongue', 'insert'}:
-        return 'Hold the shoe at the opening and turn it so the inside of the collar is visible.'
+        return ('Hold the shoe around the heel and turn it so the inside of the collar is visible; '
+                'do not pull or stretch the knit.')
     return 'Hold the shoe and turn it slowly to show the replacement product.'
 
 

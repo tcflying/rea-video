@@ -30,8 +30,14 @@ PROMPT = ('Write the voice-over for a short vertical product video, in English, 
 
 
 def facts(actions, speech):
+    seen, parts = set(), []
+    for value in actions.values():
+        text = str(value.get('target_evidence', '')).strip()
+        if text and text not in seen:
+            seen.add(text)
+            parts.append(text)
     return {
-        'product': ' '.join(str(v.get('target_evidence', '')).strip() for v in actions.values() if v.get('target_evidence')),
+        'product': ' '.join(parts),
         'source_lines': [row.get('text', '') for row in speech.get('lines', [])],
     }
 

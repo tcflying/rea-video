@@ -204,6 +204,9 @@ python engine/rea_remake.py plan out/demo product1.png product2.png product3.png
 # 改了提示词/商品事实后重建（保留已渲染片段，历史记录改名 .superseded）
 python engine/rea_remake.py plan out/demo product1.png product2.png product3.png --reprompt
 
+# 2.5) 锁定口播（可选）：人工写好的句子先跑一遍，finish 会原样复用
+python engine/narration.py out/demo --script "These pink baby shoes have a knit upper and a soft rubber sole, and they slip on in one easy motion." "..." "..."
+
 # 3) 逐段生成 + 拼接 + 配音 + 验收
 python engine/rea_remake.py render out/demo
 
@@ -237,7 +240,7 @@ python engine/rea_remake.py render out/demo --skip-gate
 
 1. **结构**：帧数、fps、时长、音轨、完整解码
 2. **口播**：只允许商品事实里出现的颜色/部件；出现 `lace/strap/box/insert` 等缺失部件、未证实卖点、未核对数字 → 拒绝
-3. **契约**：原片需要系带/拆盒而商品没有 → `actions` 必须 `adapt`，且改写后的动作不能又把这些部件演出来
+3. **契约**：原片需要系带/拆盒而商品没有 → `actions` 必须 `adapt`，且改写后的动作不能又把这些部件演出来；改写动作也不得拉、撑、掀起针织口（会把手或织物穿进鞋里），不得从鞋内取物（内垫/鞋舌是原片的部件）
 4. **逐镜人工复核**：按镜头中帧哈希记录，重新出片后未复核或帧变了的镜头都会重新变成 missing
 
 复核流程：
@@ -312,7 +315,8 @@ python engine/test_jobs.py
 | 峰值显存 | 21,871 MiB |
 | 成片 | 1046 帧 / 34.867 s / 1080×1920 / 30 fps / AAC |
 | 拼接与混音 | ≈ 100–110 s |
-| 口播 ASR 回读 | 0.9744（新版文案） |
+| 口播 ASR 回读 | 0.9744（模型文案）/ 1.0（人工锁定文案） |
+| 本轮整片返工（8 段 1266 s + G4/G6 288 s + G4 137 s） | 峰值 9,683 MiB，ASR 1.0，复核 31/31 |
 
 这些数字是这套权重、4 步 turbo、480×864 下的结果；换分辨率、步数、显卡都要重测，不要拿短片段外推长片。
 
@@ -326,6 +330,8 @@ python engine/test_jobs.py
 4. **网页不带 token**：本机用可以，暴露到局域网前必须加认证。
 5. **不自动挑商品图**：1–3 张图由调用方给；商品事实来自 plan 阶段对图的解读。
 6. **只验证了 Windows + Git Bash**：Linux 需要改 `start_engine.sh` 里的 `cygpath` 和路径。
+7. **印刷纹样按段略漂**：商品图上是「一排三角 + 一排点」的组合，H3 在个别 8 段里会偏向纯点阵或纯三角；30 fps 成片里这是同一件商品的两处细节取舍，复核按镜头记录。
+8. **默认文案由视觉模型重写**：要严格口径就先用 `engine/narration.py --script` 锁定人工句子，再跑 `finish`；事实文本已按段去重，不会再重复拼接。
 
 ---
 

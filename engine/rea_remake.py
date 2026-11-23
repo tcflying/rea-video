@@ -180,7 +180,8 @@ def h3_prompt(unit, actions, nphotos, contract=None):
             'retention_analysis: <Video 1> partially_preserved for environment, camera and movement. '
             'Colour, print, sole, closures and openings belong to the replacement in the pictures.\n'
             'sanitised_hands: fingers stay outside the shoe at all times; never place a thumb or finger inside '
-            'the knit opening or through the upper.\n'
+            'the knit opening or through the upper, never pull, stretch or lift the knit edge, and keep the shoe '
+            'silhouette unchanged.\n'
             'detailed_description: Preserve poses and visible occlusion. Render a clean picture for later titling.')
     if PACKAGING_BAN not in lead:
         lead += '\n' + PACKAGING_BAN
